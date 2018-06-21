@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2C1763A5C38F87D98768D2E9 /* libPods-HttpRequestRecord.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 067EED6063A9B45B33A6FF97 /* libPods-HttpRequestRecord.a */; };
+		7B3CD2B120DBAD14001CA091 /* UIViewController+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B3CD2B020DBAD14001CA091 /* UIViewController+Utils.m */; };
 		7B71849420B54B2B00B0DF78 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B71849320B54B2B00B0DF78 /* AppDelegate.m */; };
 		7B71849720B54B2B00B0DF78 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B71849620B54B2B00B0DF78 /* ViewController.m */; };
 		7B71849A20B54B2B00B0DF78 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B71849820B54B2B00B0DF78 /* Main.storyboard */; };
@@ -48,6 +49,8 @@
 
 /* Begin PBXFileReference section */
 		067EED6063A9B45B33A6FF97 /* libPods-HttpRequestRecord.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HttpRequestRecord.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7B3CD2AF20DBAD14001CA091 /* UIViewController+Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Utils.h"; sourceTree = "<group>"; };
+		7B3CD2B020DBAD14001CA091 /* UIViewController+Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Utils.m"; sourceTree = "<group>"; };
 		7B71848F20B54B2B00B0DF78 /* HttpRequestRecord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HttpRequestRecord.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B71849220B54B2B00B0DF78 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7B71849320B54B2B00B0DF78 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -223,6 +226,8 @@
 				7B7184D820B54B7400B0DF78 /* NSURLResponse+Data.m */,
 				7B7184D920B54B7400B0DF78 /* NSURLSession+NetHook.h */,
 				7B7184DC20B54B7400B0DF78 /* NSURLSession+NetHook.m */,
+				7B3CD2AF20DBAD14001CA091 /* UIViewController+Utils.h */,
+				7B3CD2B020DBAD14001CA091 /* UIViewController+Utils.m */,
 			);
 			path = NetCategory;
 			sourceTree = "<group>";
@@ -400,6 +405,7 @@
 				7B7184DF20B54B7400B0DF78 /* MemoryHelper.m in Sources */,
 				7B7184E120B54B7400B0DF78 /* HttpDetailVc.m in Sources */,
 				7B7184E020B54B7400B0DF78 /* HttpDebugBaseVC.m in Sources */,
+				7B3CD2B120DBAD14001CA091 /* UIViewController+Utils.m in Sources */,
 				7B7184DD20B54B7400B0DF78 /* HttpDebugTool.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

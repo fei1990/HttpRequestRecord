@@ -7,6 +7,7 @@
 //
 
 #import "HttpDebugTool.h"
+#import "UIViewController+Utils.h"
 
 #define kDebugWinWidth 60
 #define kDebugWinHeight 25
@@ -69,18 +70,18 @@
 #pragma mark - private method
 - (void)closeHttpDebugVc:(id)sender {
     
-    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+    UIViewController *currentVc = [UIViewController currentViewController];
     
     if (!self.isDebugVcPresented) {
         HttpURLVC *vc = [[HttpURLVC alloc]init];
         UINavigationController *na = [[UINavigationController alloc]initWithRootViewController:vc];
         [na.navigationBar setTintColor:self.mainColor ? self.mainColor : kDefaultMainColor];
         [na.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18],NSForegroundColorAttributeName:self.mainColor ? self.mainColor : kDefaultMainColor}];
-        [keyWindow.rootViewController presentViewController:na animated:YES completion:^{
+        [currentVc presentViewController:na animated:YES completion:^{
             self.isDebugVcPresented = YES;
         }];
     }else {
-        [keyWindow.rootViewController dismissViewControllerAnimated:YES completion:^{
+        [currentVc dismissViewControllerAnimated:YES completion:^{
             self.isDebugVcPresented = NO;
         }];
     }
