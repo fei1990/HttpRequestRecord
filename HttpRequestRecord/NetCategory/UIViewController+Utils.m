@@ -43,8 +43,8 @@
 
 +(UIViewController *) currentViewController {
     // Find best view controller
-    UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-    return [UIViewController findBestViewController:viewController];
+    id<UIApplicationDelegate> delegate = [UIApplication sharedApplication].delegate;
+    return [UIViewController findBestViewController:delegate.window.rootViewController];
 }
 
 @end
