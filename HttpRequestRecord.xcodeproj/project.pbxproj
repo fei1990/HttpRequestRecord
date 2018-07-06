@@ -28,6 +28,7 @@
 		7B7184E520B54B7400B0DF78 /* NSURLRequest+Data.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B7184D720B54B7400B0DF78 /* NSURLRequest+Data.m */; };
 		7B7184E620B54B7400B0DF78 /* NSURLResponse+Data.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B7184D820B54B7400B0DF78 /* NSURLResponse+Data.m */; };
 		7B7184E720B54B7400B0DF78 /* NSURLSession+NetHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B7184DC20B54B7400B0DF78 /* NSURLSession+NetHook.m */; };
+		7B7B26EB20EF551F004EF1A3 /* TLToastManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B7B26EA20EF551F004EF1A3 /* TLToastManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +90,8 @@
 		7B7184DA20B54B7400B0DF78 /* NSURLResponse+Data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLResponse+Data.h"; sourceTree = "<group>"; };
 		7B7184DB20B54B7400B0DF78 /* NSURLRequest+Data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLRequest+Data.h"; sourceTree = "<group>"; };
 		7B7184DC20B54B7400B0DF78 /* NSURLSession+NetHook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLSession+NetHook.m"; sourceTree = "<group>"; };
+		7B7B26E920EF551F004EF1A3 /* TLToastManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLToastManager.h; sourceTree = "<group>"; };
+		7B7B26EA20EF551F004EF1A3 /* TLToastManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TLToastManager.m; sourceTree = "<group>"; };
 		CBEC9365D0609496405D8D01 /* Pods-HttpRequestRecord.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HttpRequestRecord.release.xcconfig"; path = "Pods/Target Support Files/Pods-HttpRequestRecord/Pods-HttpRequestRecord.release.xcconfig"; sourceTree = "<group>"; };
 		D285CA50AF4C4899AF77C03E /* Pods-HttpRequestRecord.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HttpRequestRecord.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HttpRequestRecord/Pods-HttpRequestRecord.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -190,6 +193,8 @@
 		7B7184C420B54B7400B0DF78 /* NetTool */ = {
 			isa = PBXGroup;
 			children = (
+				7B7B26E920EF551F004EF1A3 /* TLToastManager.h */,
+				7B7B26EA20EF551F004EF1A3 /* TLToastManager.m */,
 				7B7184C820B54B7400B0DF78 /* HttpDebugTool.h */,
 				7B7184C520B54B7400B0DF78 /* HttpDebugTool.m */,
 				7B7184C620B54B7400B0DF78 /* HttpDataHandle.h */,
@@ -393,6 +398,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B7184E220B54B7400B0DF78 /* HttpURLVC.m in Sources */,
+				7B7B26EB20EF551F004EF1A3 /* TLToastManager.m in Sources */,
 				7B7184E420B54B7400B0DF78 /* HttpDebugCell.m in Sources */,
 				7B71849720B54B2B00B0DF78 /* ViewController.m in Sources */,
 				7B7184A220B54B2C00B0DF78 /* main.m in Sources */,
