@@ -7,6 +7,7 @@
 //
 
 #import "HttpContentVc.h"
+#import <TLToastManager.h>
 
 @interface HttpContentVc ()
 
@@ -51,6 +52,7 @@
 - (void)copyContent {
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     pasteboard.string = self.httpContent;
+    [TLToastManager showTextTo:self.view withText:@"复制成功" dismissAfterr:1.5];
 }
 
 @end

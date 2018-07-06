@@ -14,17 +14,21 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
+  - ToastManager (1.2)
 
 DEPENDENCIES:
   - AFNetworking (~> 3.1.0)
+  - ToastManager (~> 1.2)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AFNetworking
+    - ToastManager
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  ToastManager: 78a873d0cd35f02e579d4fd99d24edd781becac9
 
-PODFILE CHECKSUM: d334559fc1a0b278e953223b4ca23d63ccfc060b
+PODFILE CHECKSUM: 082541058fb382d5ac113a8a8e1d56dc3f3f5986
 
-COCOAPODS: 1.5.2
+COCOAPODS: 1.5.3
