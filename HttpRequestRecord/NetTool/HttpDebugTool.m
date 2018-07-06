@@ -60,7 +60,7 @@
 
 - (HttpDebugWindow *)debugWin {
     if (!_debugWin) {
-        _debugWin = [[HttpDebugWindow alloc]initWithFrame:CGRectMake(0, 100, kDebugWinWidth, kDebugWinHeight)];
+        _debugWin = [[HttpDebugWindow alloc]initWithFrame:CGRectMake(CGRectGetWidth([UIScreen mainScreen].bounds) - kDebugWinWidth, 200, kDebugWinWidth, kDebugWinHeight)];
         _debugWin.windowLevel = UIWindowLevelStatusBar+1;
         _debugWin.hidden = NO;
     }
