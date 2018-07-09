@@ -15,22 +15,6 @@
 
 @implementation NSURLSession (NetHook)
 
-void swizzled_BlockMethod(Class cls, SEL originSel, SEL swizzledSel) {
-    
-    Method originMethod = class_getInstanceMethod(cls, originSel);
-    
-    Method swizzledMethod = class_getInstanceMethod(cls, swizzledSel);
-    
-    BOOL succes = class_addMethod(cls, originSel, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod));
-    
-    if (succes) {
-        class_replaceMethod(cls, swizzledSel, method_getImplementation(originMethod), method_getTypeEncoding(originMethod));
-    }else {
-        method_exchangeImplementations(originMethod, swizzledMethod);
-    }
-    
-}
-
 static void swizzled_Method(Class originalClass, SEL originalSel, Class replaceClass, SEL replaceSel) {
 
     Method originalMethod = NULL;
@@ -109,33 +93,8 @@ static void swizzled_Delegate_Method(Class originalClass, SEL originalSel, Class
 
         //hook NSURLSession 代理方法
         swizzled_Method(cls, @selector(sessionWithConfiguration:delegate:delegateQueue:), cls, @selector(swizzled_sessionWithConfiguration:delegate:delegateQueue:));
-        
-        //hook NSURLSession block
-        swizzled_BlockMethod(cls, @selector(dataTaskWithRequest: completionHandler:), @selector(swizzled_dataTaskWithRequest: completionHandler:));
-        
 
     });
-}
-
-#pragma mark - NSURLSession block
-- (NSURLSessionDataTask *)swizzled_dataTaskWithRequest:(NSURLRequest *)request completionHandler:(void (^)(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error))completionHandler {
-    
-    //记录开始请求时间
-    request.startTime = [NSDate date];
-    
-    return [self swizzled_dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        
-        NSHTTPURLResponse *httpURLResponse = (NSHTTPURLResponse *)response;
-        
-        httpURLResponse.responseData = (NSMutableData *)data;
-        
-        [self handleResponse:httpURLResponse withRequest:request];
-        
-        if (completionHandler) {
-            completionHandler(data, response, error);
-        }
-        
-    }];
 }
 
 #pragma mark - NSURLSessionDelegate
@@ -164,7 +123,37 @@ static void swizzled_Delegate_Method(Class originalClass, SEL originalSel, Class
     NSURLRequest *request = task.originalRequest;
     NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
     
-    [self handleResponse:response withRequest:request];
+    @autoreleasepool {
+        
+        HttpModel *httpModel = [[HttpModel alloc]init];
+        httpModel.host = request.URL.host;
+        httpModel.path = request.URL.path;
+        httpModel.absoluteUrl = request.URL.absoluteString;
+        httpModel.startTime = [request.startTime timeIntervalSince1970];
+        httpModel.duration = [[NSDate date] timeIntervalSince1970] - [request.startTime timeIntervalSince1970];
+        httpModel.method = request.HTTPMethod;
+        httpModel.MIMEType = response.MIMEType;
+        httpModel.statusCode = [NSString stringWithFormat:@"%ld", response.statusCode];
+        httpModel.requestHeaderFields = request.allHTTPHeaderFields;
+        httpModel.responseHeaderFields = response.allHeaderFields;
+        if (request.HTTPBody) {
+            httpModel.requestBody = request.HTTPBody;
+        }
+        httpModel.responseBody = response.responseData;
+        
+        if ([HttpDebugTool shareInstance].hostOnlyArr.count > 0) {
+            
+            for (NSString *onlyHost in [HttpDebugTool shareInstance].hostOnlyArr) {
+                if ([[request.URL.host lowercaseString] rangeOfString:[onlyHost lowercaseString]].location != NSNotFound) {
+                    [[HttpDebugTool shareInstance].dataHandle addHttpData:httpModel];
+                }
+            }
+            
+        }else {
+            [[HttpDebugTool shareInstance].dataHandle addHttpData:httpModel];
+        }
+        
+    }
     
 }
 
@@ -212,42 +201,5 @@ static void swizzled_Delegate_Method(Class originalClass, SEL originalSel, Class
 #pragma mark - NSURLSessionDownloadDelegate
 
 #pragma mark - NSURLSessionStreamDelegate
-
-#pragma mark - handle response data
-- (void)handleResponse:(NSHTTPURLResponse *)response withRequest:(NSURLRequest *)request {
-    
-    @autoreleasepool {
-        
-        HttpModel *httpModel = [[HttpModel alloc]init];
-        httpModel.host = request.URL.host;
-        httpModel.path = request.URL.path;
-        httpModel.absoluteUrl = request.URL.absoluteString;
-        httpModel.startTime = [request.startTime timeIntervalSince1970];
-        httpModel.duration = [[NSDate date] timeIntervalSince1970] - [request.startTime timeIntervalSince1970];
-        httpModel.method = request.HTTPMethod;
-        httpModel.MIMEType = response.MIMEType;
-        httpModel.statusCode = [NSString stringWithFormat:@"%ld", response.statusCode];
-        httpModel.requestHeaderFields = request.allHTTPHeaderFields;
-        httpModel.responseHeaderFields = response.allHeaderFields;
-        if (request.HTTPBody) {
-            httpModel.requestBody = request.HTTPBody;
-        }
-        httpModel.responseBody = response.responseData;
-        
-        if ([HttpDebugTool shareInstance].hostOnlyArr.count > 0) {
-            
-            for (NSString *onlyHost in [HttpDebugTool shareInstance].hostOnlyArr) {
-                if ([[request.URL.host lowercaseString] rangeOfString:[onlyHost lowercaseString]].location != NSNotFound) {
-                    [[HttpDebugTool shareInstance].dataHandle addHttpData:httpModel];
-                }
-            }
-            
-        }else {
-            [[HttpDebugTool shareInstance].dataHandle addHttpData:httpModel];
-        }
-        
-    }
-    
-}
 
 @end
