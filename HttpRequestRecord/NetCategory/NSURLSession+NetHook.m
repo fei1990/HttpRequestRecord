@@ -57,14 +57,12 @@ static void swizzled_Method(Class originalClass, SEL originalSel, Class replaceC
         //hook NSURLSessionDataDelegate
         swizzled_Delegate_Method([delegate class], @selector(URLSession:dataTask:didReceiveResponse:completionHandler:), [self class], @selector(swizzled_URLSession:dataTask:didReceiveResponse:completionHandler:));
         swizzled_Delegate_Method([delegate class], @selector(URLSession:dataTask:didReceiveData:), [self class], @selector(swizzled_URLSession:dataTask:didReceiveData:));
-//        swizzled_Delegate_Method([delegate class], @selector(URLSession:dataTask:didBecomeDownloadTask:), [self class], @selector(swizzled_URLSession:dataTask:didBecomeDownloadTask:));
-//        swizzled_Delegate_Method([delegate class], @selector(URLSession:dataTask:didBecomeStreamTask:), [self class], @selector(swizzled_URLSession:dataTask:didBecomeStreamTask:));
         
         //hook NSURLSessionDownloadDelegate
         
     }
 
-    return [self swizzled_sessionWithConfiguration: configuration delegate: delegate delegateQueue: queue];
+    return [self swizzled_sessionWithConfiguration: configuration delegate:delegate delegateQueue:queue];
 }
 
 //hook delegate方法
@@ -105,9 +103,6 @@ static void swizzled_Delegate_Method(Class originalClass, SEL originalSel, Class
              totalBytesSent:(int64_t)totalBytesSent
    totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend {
     
-    //记录开始请求时间
-    task.originalRequest.startTime = [NSDate date];
-    
     [self swizzled_URLSession:session task:task didSendBodyData:bytesSent totalBytesSent:totalBytesSent totalBytesExpectedToSend:totalBytesExpectedToSend];
     
 }
@@ -129,8 +124,6 @@ static void swizzled_Delegate_Method(Class originalClass, SEL originalSel, Class
         httpModel.host = request.URL.host;
         httpModel.path = request.URL.path;
         httpModel.absoluteUrl = request.URL.absoluteString;
-        httpModel.startTime = [request.startTime timeIntervalSince1970];
-        httpModel.duration = [[NSDate date] timeIntervalSince1970] - [request.startTime timeIntervalSince1970];
         httpModel.method = request.HTTPMethod;
         httpModel.MIMEType = response.MIMEType;
         httpModel.statusCode = [NSString stringWithFormat:@"%ld", response.statusCode];
@@ -158,14 +151,6 @@ static void swizzled_Delegate_Method(Class originalClass, SEL originalSel, Class
 }
 
 #pragma mark - NSURLSessionDataDelegate
-//- (void)swizzled_URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didBecomeStreamTask:(NSURLSessionStreamTask *)streamTask {
-//    [self swizzled_URLSession:session dataTask:dataTask didBecomeStreamTask:streamTask];
-//}
-//
-//- (void)swizzled_URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
-//      didBecomeDownloadTask:(NSURLSessionDownloadTask *)downloadTask {
-//    [self swizzled_URLSession:session dataTask:dataTask didBecomeDownloadTask:downloadTask];
-//}
 
 /*
  2.当接收到服务器返回的数据时调用

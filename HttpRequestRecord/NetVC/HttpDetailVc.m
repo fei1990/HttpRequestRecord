@@ -10,7 +10,7 @@
 #import "HttpDebugCell.h"
 #import "HttpContentVc.h"
 
-#define detailNames @[@"Request Url",@"Method",@"Status Code",@"Mime Type",@"Start Time",@"Total Duration",@"Request Header Fields",@"Request Body",@"Response Header Fields",@"Response Body"]
+#define detailNames @[@"Request Url",@"Request Method",@"Status Code",@"Mime Type",@"Request Header Fields",@"Request Body",@"Response Header Fields",@"Response Body"]
 
 static  NSString *const cellIdentifier = @"cellIdentifier";
 
@@ -40,6 +40,7 @@ static  NSString *const cellIdentifier = @"cellIdentifier";
         _tableView.delegate = (id<UITableViewDelegate>)self;
         _tableView.dataSource = (id<UITableViewDataSource>)self;
         _tableView.rowHeight = 60;
+        _tableView.tableFooterView = [UIView new];
     }
     return _tableView;
 }
@@ -51,16 +52,16 @@ static  NSString *const cellIdentifier = @"cellIdentifier";
     if (indexPath.row == 0) {
         contentVc.httpContent = self.httpModel.absoluteUrl;
         contentVc.title = @"接口地址";
-    }else if (indexPath.row == 6 || indexPath.row == 8) {
-        if (indexPath.row == 6) {
+    }else if (indexPath.row == 4 || indexPath.row == 6) {
+        if (indexPath.row == 4) {
             contentVc.httpContent = [[HttpDebugTool shareInstance].dataHandle parseDicToString:self.httpModel.requestHeaderFields];
             contentVc.title = @"请求头";
         }else {
             contentVc.httpContent = [[HttpDebugTool shareInstance].dataHandle parseDicToString:self.httpModel.responseHeaderFields];
             contentVc.title = @"响应头";
         }
-    }else if (indexPath.row == 7 || indexPath.row == 9) {
-        if (indexPath.row == 7) {
+    }else if (indexPath.row == 5 || indexPath.row == 7) {
+        if (indexPath.row == 5) {
             NSData *reqeustBody = nil;
             if ([HttpDebugTool shareInstance].delegate && [[HttpDebugTool shareInstance].delegate respondsToSelector:@selector(decriptData:)]) {
                 reqeustBody = [[HttpDebugTool shareInstance].delegate decriptData:self.httpModel.requestBody];
@@ -108,33 +109,24 @@ static  NSString *const cellIdentifier = @"cellIdentifier";
     if (indexPath.row == 3) {
         value = _httpModel.MIMEType;
     }
-    if (indexPath.row == 4) {
-        NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-        value = [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:_httpModel.startTime]];
-
-    }
-    if (indexPath.row == 5) {
-        value = [NSString stringWithFormat:@"%fs", _httpModel.duration];
-    }
-    if (indexPath.row == 6) {   //请求头
-        value = @"Tap to view";
+    if (indexPath.row == 4) {   //请求头
+        value = @"show request header fields";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
-    if (indexPath.row == 7) {   //请求体
-        value = @"Tap to view";
+    if (indexPath.row == 5) {   //请求体
+        value = @"show request body";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
-    if (indexPath.row == 8) {
-        value = @"Tap to view";
+    if (indexPath.row == 6) {
+        value = @"show response header fields";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
-    if (indexPath.row == 9) {
+    if (indexPath.row == 7) {
         NSUInteger length = _httpModel.responseBody.length;
         if (length < 1024) {
-            value = [NSString stringWithFormat:@"(%zdB) Tap to view", length];
+            value = [NSString stringWithFormat:@"(%zdB) show response body", length];
         }else {
-            value = [NSString stringWithFormat:@"(%.2fKB) Tap to view", 1.0 * length / 1024];
+            value = [NSString stringWithFormat:@"(%.2fKB) show response body", 1.0 * length / 1024];
         }
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }

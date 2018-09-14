@@ -43,6 +43,7 @@ static  NSString *const cellIdentifier = @"cellIdentifier";
         _tableView.delegate = (id<UITableViewDelegate>)self;
         _tableView.dataSource = (id<UITableViewDataSource>)self;
         _tableView.rowHeight = 60;
+        _tableView.tableFooterView = [UIView new];
     }
     return _tableView;
 }

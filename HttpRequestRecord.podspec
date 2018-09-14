@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "HttpRequestRecord"
-  s.version      = "1.1.5"
+  s.version      = "1.2.0"
   s.summary      = "request record tool."
 
   # This description is used to generate tags and improve search results.
